@@ -11,6 +11,10 @@ ROUTER = {
         'file': 'index.html',
         'mime': 'text/html'
     },
+    '/brute-force.js': {
+        'file': 'brute-force.js',
+        'mime': 'application/javascript'
+    },
     '/qrcode.min.js': {
         'file': 'qrcode.min.js',
         'mime': 'application/javascript'
@@ -34,9 +38,9 @@ class Dictionary(object):
 
 class RequestHandler(BaseHTTPRequestHandler):
 
-    def jsonp(self):
+    def word(self):
         self.send_response(200)
-        self.send_header('Content-type', 'application/javascript')
+        self.send_header('Content-type', 'text/plain')
         self.end_headers()
         self.wfile.write(bytes(self.getWord(), 'utf8'))
 
@@ -54,18 +58,18 @@ class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path in list(ROUTER):
             self.files()
-        elif self.path == '/jsonp':
-            self.jsonp()
+        elif self.path == '/word':
+            self.word()
         else:
             self.error404()
         return
 
 
 def start():
-    print('Starting Server...')
     dict = Dictionary()
     handler = RequestHandler
     setattr(handler, "getWord", dict.getWord)
+    print('Starting Server...')
     httpd = HTTPServer(('127.0.0.1', 8081), handler)
     httpd.serve_forever()
 
