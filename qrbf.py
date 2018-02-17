@@ -11,8 +11,8 @@ ROUTER = {
         'file': 'index.html',
         'mime': 'text/html'
     },
-    '/brute-force.js': {
-        'file': 'brute-force.js',
+    '/main.js': {
+        'file': 'main.js',
         'mime': 'application/javascript'
     },
     '/qrcode.min.js': {
@@ -70,7 +70,7 @@ def start():
     handler = RequestHandler
     setattr(handler, "getWord", dict.getWord)
     print('Starting Server...')
-    httpd = HTTPServer(('127.0.0.1', 8081), handler)
+    httpd = HTTPServer(('0.0.0.0', 8081), handler)
     httpd.serve_forever()
 
 
