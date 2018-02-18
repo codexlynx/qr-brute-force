@@ -2,6 +2,12 @@
 
 This repository content a PoC of a brute force attack based in QR Code.
 
+[![AUR](https://img.shields.io/aur/license/yaourt.svg)](blob/master/LICENSE)
+![python](https://img.shields.io/badge/python-3-green.svg?style=flat)
+![red-team](https://img.shields.io/badge/red-team-red.svg?style=flat)
+
+---
+
 ### License
 
 > GPL (GNU General Public License) 3.0
