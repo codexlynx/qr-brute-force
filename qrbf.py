@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from optparse import OptionParser
 from argparse import ArgumentParser
+import sys
 
 ROUTER = {
     '/': {
@@ -22,6 +22,7 @@ ROUTER = {
         'mime': 'application/javascript'
     }
 }
+
 
 class Dictionary(object):
 
@@ -78,7 +79,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         return
 
 
-def start():
+def args():
     parser = ArgumentParser()
     parser.add_argument('-d', dest='dict', help='dictionary FILE',
                         metavar='FILE', type=str, required=True)
@@ -89,16 +90,28 @@ def start():
     parser.add_argument('-i', dest='interval', default=1000, help='brute force interval (1000 ms default)',
                         metavar='MILLISECONDS', type=int)
 
-    args = parser.parse_args()
+    opts = parser.parse_args()
+    return opts
 
-    words = Dictionary(args.dict, args.interval)
+
+def init(opts):
+    words = Dictionary(opts.dict, opts.interval)
     handler = RequestHandler
     setattr(handler, 'getWord', words.getWord)
     setattr(handler, 'getInterval', words.getInterval)
-    print('Starting Server...')
-    httpd = HTTPServer(('0.0.0.0', args.port), handler)
+    return handler, opts
+
+
+def start_httpd(handler, opts):
+    print('[*]QR Brute force server on port %s...' % opts.port)
+    httpd = HTTPServer(('0.0.0.0', opts.port), handler)
     httpd.serve_forever()
 
 
 if __name__ == '__main__':
-    start()
+    handler, opts = init(args())
+    try:
+        start_httpd(handler, opts)
+    except KeyboardInterrupt:
+        sys.exit(0)
+
