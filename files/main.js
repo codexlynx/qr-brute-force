@@ -10,9 +10,11 @@ function get(endpoint, callback){
 }
 
 var qrcode = new QRCode("qrcode");
-setInterval(function(){
-    get('/word', function(word){
-         document.getElementById("sequence").value = word;
-         qrcode.makeCode(word);
-    });
-}, 1000);
+get("/interval", function(interval){
+    setInterval(function(){
+        get("/word", function(word){
+             document.getElementById("sequence").value = word;
+             qrcode.makeCode(word);
+        });
+    }, parseInt(interval));
+});
