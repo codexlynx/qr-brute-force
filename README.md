@@ -8,11 +8,27 @@ This repository content a PoC of a brute force attack based in QR Code.
 
 ---
 
+### Disclaimer
+
+This PoC is develeped only for __educational__ purposes and __ethical__ hacking. Use it at your own responsibility. Damages or legal problems caused are the responsibility of the user.
+
 ### License
 
 > GPL (GNU General Public License) 3.0
 
 More info: [here](LICENSE)
+
+### Usage
+
+```
+usage: qrbf.py [-h] -d FILE [-p PORT] [-i MILLISECONDS]
+
+optional arguments:
+  -h, --help       show this help message and exit
+  -d FILE          dictionary FILE
+  -p PORT          server port (8080 default)
+  -i MILLISECONDS  brute force interval (1000 ms default)
+```
 
 ### About
 This repository was created by: __@codexlynx__.
